@@ -15,7 +15,7 @@
     Public newgame As Boolean = False
     Public lastcolourpick As Color = Color.Gray
     Public programsopen As Integer = 0
-    Public ShiftOSPath As String = "C:\ShiftOS"
+    Public ShiftOSPath As String = "C:\ShiftOS\"
     Private actualshiftversion As String = "0.0.8"
     Public ingameversion As String = "0.0.1.0"
     Public password As String
@@ -1623,9 +1623,9 @@
         Skins.loadimages()
         desktopicons.AllowDrop = True
         desktopicons.AutoArrange = False
-        For Each Control In MyBase.Controls
-            Control.visible = False
-        Next
+        'For Each Control In MyBase.Controls UNFINISHED/WTF?
+        '   Control.visible = False
+        'Next
         If Skins.autologin = False Then
             If Skins.fullScreen = False Then
                 loginform.ShowDialog()
@@ -1635,16 +1635,16 @@
         End If
 
 
-            For Each Control In MyBase.Controls
-                Control.visible = True
-                hideStart()
-            Next
-            Try
-                Helper.playSound(Paths.sounddir & "startup.wav", AudioPlayMode.WaitToComplete)
-            Catch ex As Exception
-                'Do nothing -- Haven't found a good startup sound
-            End Try
-        DockWindow.Show()
+        'For Each Control In MyBase.Controls UNFINISHED/WTF?
+        '    Control.visible = True
+        '    hideStart()
+        'Next
+        Try
+            Helper.playSound(Paths.sounddir & "startup.wav", AudioPlayMode.WaitToComplete)
+        Catch ex As Exception
+            'Do nothing -- Haven't found a good startup sound
+        End Try
+        'DockWindow.Show() UNFINISHED
     End Sub
 
     Public Sub loadcurrentskin()
