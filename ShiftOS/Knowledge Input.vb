@@ -43,6 +43,26 @@
         makeelementslist()
         makefruitlist()
         makegameconsoleslist()
+        If ShiftOSDesktop.boughtkicarbrands = True Then
+            If ListBox1.Items.Contains("Car Brands") Then
+            Else
+                ListBox1.Items.Add("Car Brands")
+            End If
+        End If
+
+        If ShiftOSDesktop.boughtkigameconsoles = True Then
+            If ListBox1.Items.Contains("Game Consoles") Then
+            Else
+                ListBox1.Items.Add("Game Consoles")
+            End If
+        End If
+
+        If ShiftOSDesktop.boughtkielements = True Then
+            If ListBox1.Items.Contains("Elements") Then
+            Else
+                ListBox1.Items.Add("Elements")
+            End If
+        End If
         If ShiftOSDesktop.KnowledgeInputCorrupted Then Me.Close() : infobox.showinfo("The Plague.", Me.Name & "has been corrupted by The Plague.")
 
         If ShiftOSDesktop.boughtgray4 = True And ShiftOSDesktop.boughtshiftnet = False Then tmrstoryline.Start()
