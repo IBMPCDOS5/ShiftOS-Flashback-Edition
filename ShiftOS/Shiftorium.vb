@@ -1290,6 +1290,23 @@ Public Class Shiftorium
         lbupgrades.Sorted = True
     End Sub
 
+    ' New function for The New Calassic: decreases the font size until the whole string fits on the label.
+    ' This fixes the long-standing issue of upgrade descriptions cutting off.
+    Private Sub SetUpgradeDescription(ByRef Text As String)
+        Dim MaxHeight = lbudescription.Height
+        lbudescription.Text = Text
+        lbudescription.Font = New Font("Microsoft Sans Serif", 12, FontStyle.Italic, GraphicsUnit.Point)
+        lbudescription.MaximumSize = New Size(321, 0)
+        lbudescription.AutoSize = True
+        While lbudescription.Height > 144 And lbudescription.Font.Size > 9
+            lbudescription.Font = New Font(lbudescription.Font.FontFamily, lbudescription.Font.Size - 1, lbudescription.Font.Style, lbudescription.Font.Unit)
+        End While
+        Dim FinalSize = lbudescription.Size
+        lbudescription.AutoSize = False
+        lbudescription.MaximumSize = New Size(0, 0)
+        lbudescription.Size = FinalSize
+    End Sub
+
     Private Sub handlebuy(ByVal name As String, ByRef bought As Boolean, ByVal boughttutorial As String, ByVal upgradetype As Integer)
 
         On Error Resume Next
@@ -1301,9 +1318,9 @@ Public Class Shiftorium
                 bought = True
                 lbupgradename.Font = New Font("teen", 13, FontStyle.Bold)
                 lbupgradename.Text = "Purchased " & lbupgrades.SelectedItem.ToString.Substring(0, lbupgrades.SelectedItem.ToString.IndexOf("-"))
-                lbudescription.Text = boughttutorial
                 lbudescription.Size = New Size(321, 180)
                 lbudescription.Location = New Point(24, 47)
+                SetUpgradeDescription(boughttutorial)
                 lbprice.Size = New Size(340, 49)
                 lbprice.Location = New Point(10, 372)
                 lbprice.Font = New Font("teen", 16, FontStyle.Bold)
@@ -1358,7 +1375,6 @@ Public Class Shiftorium
         If lbupgrades.SelectedItem.ToString = itemname Then
             lbupgradename.Font = New Font("teen", 20, FontStyle.Bold)
             lbupgradename.Text = lbupgrades.SelectedItem.ToString.Substring(0, lbupgrades.SelectedItem.ToString.IndexOf("-"))
-            lbudescription.Text = itemdescription
             picpreview.Image = itempic
             lbprice.Text = lbupgrades.SelectedItem.ToString.Substring(lbupgrades.SelectedItem.ToString.IndexOf("-") + 2, lbupgrades.SelectedItem.ToString.Length - lbupgradename.Text.Length - 2)
             lbprice.Size = New Size(139, 59)
@@ -1367,6 +1383,7 @@ Public Class Shiftorium
             picpreview.Location = New Point(25, 218)
             lbudescription.Location = New Point(24, 61)
             lbudescription.Size = New Size(321, 144)
+            SetUpgradeDescription(itemdescription)
             lbupgradename.Location = New Point(5, 17)
             btnbuy.Show()
             If ShiftOSDesktop.codepoints > Convert.ToInt32(lbprice.Text.Substring(0, lbprice.Text.Length - 3) - 1) Then
